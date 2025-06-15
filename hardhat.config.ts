@@ -11,10 +11,14 @@ dotenv.config();
 
 // Ensure we have all the environment variables we need
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
-const FUJI_PRIVATE_KEY = process.env.FUJI_PRIVATE_KEY || "";
+const FUJI_PRIVATE_KEY = process.env.FUJI_PRIVATE_KEY;
 const AVALANCHE_PRIVATE_KEY = process.env.AVALANCHE_PRIVATE_KEY || "";
 const SNOWTRACE_API_KEY = process.env.SNOWTRACE_API_KEY || "";
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "";
+
+if (!FUJI_PRIVATE_KEY) {
+  console.warn("⚠️ FUJI_PRIVATE_KEY not found in .env file. Some functionality may be limited.");
+}
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -66,7 +70,6 @@ const config: HardhatUserConfig = {
     currency: "USD",
     coinmarketcap: COINMARKETCAP_API_KEY,
     token: "AVAX",
-    showTimeSpent: true,
   },
   // Typechain configuration
   typechain: {
